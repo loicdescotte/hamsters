@@ -2,7 +2,7 @@ package io.github.hamsters
 
 trait Enumerable[A] {
 
-  def name(a: A): String = a.toString.toLowerCase
+  def name(a: A): String = Showable.fromToStringLowerCase.format(a)
 
   def parse(s: String): Option[A] = list.find(a => name(a) == s)
 

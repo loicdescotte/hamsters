@@ -50,6 +50,10 @@ object Showable {
   implicit val unitShowable: Showable[Unit] = new Showable[Unit] {
     override def format(value: Unit) = value.toString
   }
+
+  def fromToStringLowerCase[A]: Showable[A] = new Showable[A] {
+    override def format(value: A) = value.toString.toLowerCase()
+  }
 }
 
 object Show {
