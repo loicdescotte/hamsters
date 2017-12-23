@@ -27,6 +27,15 @@ object Monad {
     override def map[A, B](boxA: Option[A])(f: A => B) = boxA.map(f)
   }
 
+  implicit val listMonad = new Monad[List] {
+
+    override def pure[A](a: A): List[A] = List(a)
+
+    override def flatMap[A, B](boxA: List[A])(f: A => List[B]): List[B] = boxA.flatMap(f)
+
+    override def map[A, B](boxA: List[A])(f: A => B): List[B] = boxA.map(f)
+  }
+
   implicit def futureMonad(implicit ec: ExecutionContext) = new Monad[Future] {
 
     override def pure[A](x: A): Future[A] = Future.successful(x)
