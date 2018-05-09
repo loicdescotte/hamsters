@@ -108,7 +108,7 @@ lazy val hamsters = crossProject(JSPlatform, JVMPlatform)
   .dependsOn(metas)
   .dependsOn(macros)  
   .settings(libraryDependencies ++= Seq(
-    "org.scalatest" %%% "scalatest" % "3.0.1" % "test",
+    "org.scalatest" %%% "scalatest" % "3.0.4" % "test",
     "org.scalamock" %%% "scalamock-scalatest-support" % "3.6.0" % "test",
     "org.scalacheck" %%% "scalacheck" % "1.13.4" % "test",
     "ca.mrvisser" %% "sealerate" % "0.0.5" % "test"

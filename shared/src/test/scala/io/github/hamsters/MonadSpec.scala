@@ -3,9 +3,11 @@ package io.github.hamsters
 import org.scalacheck.Prop.forAll
 import org.scalacheck.{Arbitrary, Properties}
 
+import scala.language.higherKinds
 import scala.reflect.ClassTag
 
 class OptionMonadSpec extends MonadSpec[String, String, String, Option](Monad.optionMonad)
+class ListMonadSpec extends MonadSpec[String, String, String, List](Monad.listMonad)
 
 //exceptions break the laws for future
 //class FutureMonadSpec extends MonadSpec[String, String, String, Future](Monad.futureMonad)
