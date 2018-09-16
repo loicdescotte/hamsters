@@ -2,7 +2,7 @@ import sbt.Keys._
 import sbtcrossproject.{crossProject, CrossType}
 
 
-val globalSettings =Defaults.coreDefaultSettings ++ Seq(
+val globalSettings = Defaults.coreDefaultSettings ++ Seq(
   organization := "io.github.scala-hamsters",
   version := "3.0.0",
   scalacOptions ++= Seq(),
@@ -15,7 +15,14 @@ val buildSettings = globalSettings ++ Seq(
   addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full),
   scalacOptions ++= List("-Xplugin-require:macroparadise", "-language:higherKinds", "-language:implicitConversions", "-feature"),
   scalacOptions in(Compile, console) := Seq(), // macroparadise plugin doesn't work in repl yet.
-  resolvers += Resolver.bintrayIvyRepo("scalameta", "maven")
+  resolvers += Resolver.bintrayIvyRepo("scalameta", "maven"),
+  unmanagedSourceDirectories in Compile <+= (scalaVersion, sourceDirectory in Compile) {
+    case (v, dir) if v startsWith "2.11" => dir / "scala_2_11"
+    case (v, dir) if v startsWith "2.13" => dir / "scala_2.13"
+  }
+  unmanagedSourceDirectories in Test <+= (scalaVersion, sourceDirectory in Test) {
+    case (v, dir) if v startsWith "2.13" => dir / "scala_2.13"
+  }
 )
 
 
@@ -45,17 +52,17 @@ lazy val publishSettings = Seq(
           <name>Hamsters Team</name>
           <url>https://github.com/scala-hamsters/hamsters/graphs/contributors</url>
         </developer>
-      </developers>    )
+      </developers>)
 )
 
-lazy val noDocFileSettings = Seq (
+lazy val noDocFileSettings = Seq(
   sources in doc in Compile := List()
 )
 
 val hamstersSettings = buildSettings ++ publishSettings
 
 scalaVersion in ThisBuild := "2.12.4"
-crossScalaVersions in ThisBuild := Seq("2.11.11", "2.12.4")
+crossScalaVersions in ThisBuild := Seq("2.11.11", "2.12.4", "2.13.0-M4")
 publishTo in ThisBuild := {
   val nexus = "https://oss.sonatype.org/"
   if (version.value.toLowerCase.endsWith("snapshot"))
@@ -75,9 +82,9 @@ lazy val metasJS = metas.js.settings(name := "metas")
 
 
 val buildMacrosSettings = globalSettings ++ Seq(
-    libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-    resolvers += Resolver.sonatypeRepo("releases"),
-    addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+  libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value,
+  resolvers += Resolver.sonatypeRepo("releases"),
+  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 )
 
 val macroSettings = buildMacrosSettings ++ publishSettings
@@ -95,7 +102,7 @@ lazy val hamsters = crossProject(JSPlatform, JVMPlatform)
   .crossType(CrossType.Full)
   .in(file("."))
   .dependsOn(metas)
-  .dependsOn(macros)  
+  .dependsOn(macros)
   .settings(libraryDependencies ++= Seq(
     "org.scalatest" %%% "scalatest" % "3.0.1" % "test",
     "org.scalamock" %%% "scalamock-scalatest-support" % "3.6.0" % "test",
