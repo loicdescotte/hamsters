@@ -15,14 +15,7 @@ val buildSettings = globalSettings ++ Seq(
   addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full),
   scalacOptions ++= List("-Xplugin-require:macroparadise", "-language:higherKinds", "-language:implicitConversions", "-feature"),
   scalacOptions in(Compile, console) := Seq(), // macroparadise plugin doesn't work in repl yet.
-  resolvers += Resolver.bintrayIvyRepo("scalameta", "maven"),
-  unmanagedSourceDirectories in Compile <+= (scalaVersion, sourceDirectory in Compile) {
-    case (v, dir) if v startsWith "2.11" => dir / "scala_2_11"
-    case (v, dir) if v startsWith "2.13" => dir / "scala_2.13"
-  }
-  unmanagedSourceDirectories in Test <+= (scalaVersion, sourceDirectory in Test) {
-    case (v, dir) if v startsWith "2.13" => dir / "scala_2.13"
-  }
+  resolvers += Resolver.bintrayIvyRepo("scalameta", "maven")
 )
 
 
