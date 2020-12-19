@@ -6,7 +6,8 @@ import scala.meta._
 
 class CartesianMacro extends StaticAnnotation {
 
-  inline def apply(defn: Any): Any = meta {
+  @inline
+  def apply(defn: Any): Any = {
 
     val MAX_ARITY = 23
 
