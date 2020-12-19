@@ -6,7 +6,8 @@ import scala.meta.{Term, _}
 
 class UnionMacro extends scala.annotation.StaticAnnotation {
 
-  inline def apply(defn: Any): Any = meta {
+  @inline
+  def apply(defn: Any): Any = {
 
     def argByXY(idx: Int, i: Int): Term =
       if (idx == i) q"""Some(t)"""

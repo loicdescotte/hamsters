@@ -77,7 +77,7 @@ lazy val metasJS = metas.js.settings(name := "metas")
 val buildMacrosSettings = globalSettings ++ Seq(
     libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value,
     resolvers += Resolver.sonatypeRepo("releases"),
-    addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+    addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full)
 )
 
 val macroSettings = buildMacrosSettings ++ publishSettings
@@ -97,9 +97,9 @@ lazy val hamsters = CrossPlugin.autoImport.crossProject(JSPlatform, JVMPlatform)
   .dependsOn(metas)
   .dependsOn(macros)
   .settings(libraryDependencies ++= Seq(
-    "org.scalatest" %%% "scalatest" % "3.1.0" % "test",
+    "org.scalatest" %%% "scalatest" % "3.2.2" % "test",
     "org.scalamock" %%% "scalamock-scalatest-support" % "3.6.0" % "test",
-    "org.scalacheck" %%% "scalacheck" % "1.14.1" % "test"
+    "org.scalacheck" %%% "scalacheck" % "1.15.1" % "test"
   ))
   .settings(hamstersSettings)
 

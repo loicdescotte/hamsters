@@ -5,7 +5,8 @@ import scala.meta._
 
 class HListMacro extends scala.annotation.StaticAnnotation {
 
-  inline def apply(defn: Any): Any = meta {
+  @inline
+  def apply(defn: Any): Any = {
 
     defn match {
       case q"..$mods class $tName(..$params)" =>

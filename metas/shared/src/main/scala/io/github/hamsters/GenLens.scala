@@ -5,7 +5,8 @@ import scala.collection.immutable.Seq
 import scala.meta._
 class GenLens extends StaticAnnotation {
 
-  inline def apply(defn: Any): Any = meta {
+  @inline
+  def apply(defn: Any): Any = {
     defn match {
       case q"""case class $tName(..$params)""" => {
 

@@ -5,7 +5,8 @@ import scala.meta._
 
 class ValidationMacro extends scala.annotation.StaticAnnotation {
 
-  inline def apply(defn: Any): Any = meta {
+  @inline
+  def apply(defn: Any): Any = {
 
     val arityRange = Range(1, 23)
 
